@@ -23,6 +23,7 @@ btn_down    = Pin(5, Pin.IN, Pin.PULL_UP)
 btn_left    = Pin(2, Pin.IN, Pin.PULL_UP)
 btn_right   = Pin(6, Pin.IN, Pin.PULL_UP)
 btn_select  = Pin(4, Pin.IN, Pin.PULL_UP)
+btn_shift   = Pin(15, Pin.IN, Pin.PULL_UP)
 
 # TFT init
 WHITE = const(0XFFFFFF)
@@ -117,14 +118,17 @@ while(1):
     #####################
     # SCROLL FILES
     #####################
+    scroll_mul = 1
     if not is_slot_selection and time.ticks_ms() - last_ticks_btn > 250 and btn_down.value() == 0:
         tft.fill(TFT.BLACK)
         # scroll down
+        if btn_shift.value() == 0:
+            scroll_mul = MAX_FILE_ON_DISP
         if cursor_pos == file_list_offs[1] and file_list_offs[1] < len(fv_files)-1:
-            file_list_offs[0] = file_list_offs[0] + 1
-            file_list_offs[1] = file_list_offs[1] + 1
-        cursor_pos = cursor_pos + 1
-        if file_list_offs[1] == len(fv_files)-1 and cursor_pos > len(fv_files)-1:
+            file_list_offs[0] = file_list_offs[0] + 1 * scroll_mul
+            file_list_offs[1] = file_list_offs[1] + 1 * scroll_mul
+        cursor_pos = cursor_pos + 1 * scroll_mul
+        if file_list_offs[1] >= len(fv_files)-1 and cursor_pos > len(fv_files)-1:
             # scroll to beginning
             cursor_pos = 0 # gets +1 directly afterwards
             file_list_offs[0] = 0
@@ -139,11 +143,13 @@ while(1):
     if not is_slot_selection and time.ticks_ms() - last_ticks_btn > 250 and btn_up.value() == 0:
         tft.fill(TFT.BLACK)
         # scroll up
+        if btn_shift.value() == 0:
+            scroll_mul = MAX_FILE_ON_DISP
         if cursor_pos == file_list_offs[0] and file_list_offs[0] > 0:
-            file_list_offs[0] = file_list_offs[0] - 1
-            file_list_offs[1] = file_list_offs[1] - 1
-        cursor_pos = cursor_pos - 1
-        if file_list_offs[0] == 0 and cursor_pos < 0:
+            file_list_offs[0] = file_list_offs[0] - 1 * scroll_mul
+            file_list_offs[1] = file_list_offs[1] - 1 * scroll_mul
+        cursor_pos = cursor_pos - 1 * scroll_mul
+        if file_list_offs[0] <= 0 and cursor_pos < 0:
             # roll over
             cursor_pos = len(fv_files)-1
             file_list_offs[0] = cursor_pos - MAX_FILE_ON_DISP
