@@ -1,7 +1,12 @@
 # Micropython FV-1 flasher
 
 Small project for flashing 24LC32A EEPROMs using any microcontroller which has enough flash and
-is able to run Micropython.
+is able to run Micropython. Just because, a raspberry pico is used.
+
+<p float="left">
+  <img src="pic/prototype_front.jpg" width="50" />
+  <img src="pic/prototype_back.jpg" width="50" />
+</p>
 
 # Code
 
