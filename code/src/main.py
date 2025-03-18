@@ -251,6 +251,7 @@ while(1):
                     except MemoryError:
                         # TODO: wat to do with Error
                         print("MemoryError: file content too big for RAM")
+                        tft.text(txt_pos, f"slot{slot+1} ERROR:file too big!", TFT.RED, sysfont, 1)
                         continue
 
                 encoding = 'utf-8'
@@ -284,6 +285,7 @@ while(1):
                         continue
                     else:
                         # reset to startign flags
+                        print("did work now")
                         fv1_parser.doclamp = True
                         fv1_parser.spinreals = True
                         break
