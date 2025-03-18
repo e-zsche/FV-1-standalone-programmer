@@ -48,7 +48,14 @@ Make sure to insert the EEPROM with the correct orientation!!
 
 ## Buttons
 
-In total there are Five Buttons arranged as a sort of D-Pad.
+In total there are five buttons arranged as a sort of D-Pad and a shift button.
+
+Controls:
+- up and down for scrolling through file list (faster scrolling when holding shift button)
+- left and right for selecting program slot of selected file
+- middle button
+  * start programming (when not selecting slot)
+  * selecting slot
 
 # Obtain SPN files
 
