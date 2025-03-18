@@ -47,12 +47,14 @@ In total there are Five Buttons arranged as a sort of D-Pad.
 
 # Obtain SPN files
 
-Well, writing programs yourself for the FV-1 is good way to get some programs. Info on the assembly
-language itself is a little harder to find. However there are some sources inside a forum dating
-back to 2019:
+Writing programs yourself for the FV-1 is good way to get some programs. Info on the assembly
+language is a little harder to find than info on the FV-1 hardware. However there are some
+sources inside a forum dating back to 2019:
+
 - ![Spin FV-1 Audio Effects](https://xenvn.com/threads/spin-fv-1-audio-effects.125)
 - ![Spin FV-1 Instructions and Syntax](https://xenvn.com/threads/spin-fv-1-instructions-and-syntax.122/)
 - ![Basics of the LFOs in the Spin FV-1](https://xenvn.com/threads/basics-of-the-lfos-in-the-spin-fv-1.123/)
+
 This is about all the info I could find on the assembly instructions itself...
 
 Another wonderful source of programs is mstratman's collection of programs:
