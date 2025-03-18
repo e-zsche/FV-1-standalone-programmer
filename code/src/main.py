@@ -233,14 +233,13 @@ while(1):
             # something in dict
             for slot in range(8):
                 txt_pos = (1, 2+slot*10)
-                f_name = fv_program_slots[slot].split(".")[0]
-                if f_name == "":
+                if fv_program_slots[slot] == "":
                     tft.text(txt_pos, f"slot{slot+1} empty", TFT.WHITE, sysfont, 1)
                     continue
-                print(f"slot {slot}: {f_name}")
+                print(f"slot {slot}: {fv_program_slots[slot]}")
                 spn_content = b""
                 gc.collect() # free some RAM for this!
-                with open(f"{SPN_ROOT_DIR}/{f_name}.spn", "rb") as f:
+                with open(f"{SPN_ROOT_DIR}/{fv_program_slots[slot]}", "rb") as f:
                     try:
                         for line in f.readlines():
                             if line.startswith(b";") \
@@ -303,7 +302,11 @@ while(1):
                 else:
                     tft.text(txt_pos, f"slot{slot+1} ERROR:not written!", TFT.RED, sysfont, 1)
 
-            time.sleep(1)
+                # free RAM so it does not fill while assembling
+                del spn_content
+                del fv1_parser
+                gc.collect() # free some RAM for this!
+
             tft.text((10, txt_pos[1]+22), f"press select button", TFT.YELLOW, sysfont, 1)
             tft.text((10, txt_pos[1]+34), f"to continue", TFT.YELLOW, sysfont, 1)
             while btn_select.value():
