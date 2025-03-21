@@ -124,19 +124,23 @@ while(1):
         # scroll down
         if btn_shift.value() == 0:
             scroll_mul = MAX_FILE_ON_DISP
-        cursor_pos = cursor_pos + 1 * scroll_mul
+
+        cursor_pos += 1 * scroll_mul
+
         if cursor_pos > file_list_offs[1]:
-            cursor_pos = file_list_offs[1]
-        if cursor_pos == file_list_offs[1] and file_list_offs[1] < len(fv_files)-1:
             file_list_offs[0] = file_list_offs[0] + 1 * scroll_mul
             file_list_offs[1] = file_list_offs[1] + 1 * scroll_mul
-        if file_list_offs[1] >= len(fv_files)-1 and cursor_pos > len(fv_files)-1:
+
+        if file_list_offs[1] > len(fv_files)-1:
             # roll over to beginning
-            cursor_pos = 0 # gets +1 directly afterwards
             file_list_offs[0] = 0
             file_list_offs[1] = MAX_FILE_ON_DISP
+            cursor_pos = 0
+
         if cursor_pos > len(fv_files)-1:
-            cursor_pos = len(fv_files)-1
+            cursor_pos = 0
+
+        # redraw screen
         draw_file_list()
         # update btn debounce
         last_ticks_btn = time.ticks_ms()
@@ -147,19 +151,22 @@ while(1):
         # scroll up
         if btn_shift.value() == 0:
             scroll_mul = MAX_FILE_ON_DISP
+
         cursor_pos = cursor_pos - 1 * scroll_mul
+
         if cursor_pos < file_list_offs[0]:
-            cursor_pos = file_list_offs[0]
-        if cursor_pos == file_list_offs[0] and file_list_offs[0] > 0:
             file_list_offs[0] = file_list_offs[0] - 1 * scroll_mul
             file_list_offs[1] = file_list_offs[1] - 1 * scroll_mul
-        if file_list_offs[0] <= 0 and cursor_pos < 0:
+
+        if file_list_offs[0] < 0:
             # roll over
+            file_list_offs[0] = len(fv_files)-1 - MAX_FILE_ON_DISP
+            file_list_offs[1] = len(fv_files)-1
             cursor_pos = len(fv_files)-1
-            file_list_offs[0] = cursor_pos - MAX_FILE_ON_DISP
-            file_list_offs[1] = cursor_pos
+
         if cursor_pos < 0:
-            cursor_pos = 0
+            cursor_pos = len(fv_files)-1
+
         draw_file_list()
         # update btn debounce
         last_ticks_btn = time.ticks_ms()
