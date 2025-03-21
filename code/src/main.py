@@ -124,12 +124,14 @@ while(1):
         # scroll down
         if btn_shift.value() == 0:
             scroll_mul = MAX_FILE_ON_DISP
+        cursor_pos = cursor_pos + 1 * scroll_mul
+        if cursor_pos > file_list_offs[1]:
+            cursor_pos = file_list_offs[1]
         if cursor_pos == file_list_offs[1] and file_list_offs[1] < len(fv_files)-1:
             file_list_offs[0] = file_list_offs[0] + 1 * scroll_mul
             file_list_offs[1] = file_list_offs[1] + 1 * scroll_mul
-        cursor_pos = cursor_pos + 1 * scroll_mul
         if file_list_offs[1] >= len(fv_files)-1 and cursor_pos > len(fv_files)-1:
-            # scroll to beginning
+            # roll over to beginning
             cursor_pos = 0 # gets +1 directly afterwards
             file_list_offs[0] = 0
             file_list_offs[1] = MAX_FILE_ON_DISP
@@ -145,10 +147,12 @@ while(1):
         # scroll up
         if btn_shift.value() == 0:
             scroll_mul = MAX_FILE_ON_DISP
+        cursor_pos = cursor_pos - 1 * scroll_mul
+        if cursor_pos < file_list_offs[0]:
+            cursor_pos = file_list_offs[0]
         if cursor_pos == file_list_offs[0] and file_list_offs[0] > 0:
             file_list_offs[0] = file_list_offs[0] - 1 * scroll_mul
             file_list_offs[1] = file_list_offs[1] - 1 * scroll_mul
-        cursor_pos = cursor_pos - 1 * scroll_mul
         if file_list_offs[0] <= 0 and cursor_pos < 0:
             # roll over
             cursor_pos = len(fv_files)-1
