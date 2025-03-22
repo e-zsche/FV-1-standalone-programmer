@@ -42,7 +42,7 @@ Connected via SPI. Slot is Integrated into display module.
 ## EEPROM sockets
 
 There are two positions on the PCB. One is for THT chips, the other for SMD chips.
-SMD socket is the ![SOIC-8 socket from adafruit](https://www.adafruit.com/product/4726)
+SMD socket is the <a href="https://www.adafruit.com/product/4726">SOIC-8 socket from adafruit</a>
 
 Make sure to insert the EEPROM with the correct orientation!!
 
@@ -63,9 +63,9 @@ Writing programs yourself for the FV-1 is good way to get some programs. Info on
 language is a little harder to find than info on the FV-1 hardware. However there are some
 sources inside a forum dating back to 2019:
 
-- ![Spin FV-1 Audio Effects](https://xenvn.com/threads/spin-fv-1-audio-effects.125)
-- ![Spin FV-1 Instructions and Syntax](https://xenvn.com/threads/spin-fv-1-instructions-and-syntax.122/)
-- ![Basics of the LFOs in the Spin FV-1](https://xenvn.com/threads/basics-of-the-lfos-in-the-spin-fv-1.123/)
+- <a href="https://xenvn.com/threads/spin-fv-1-audio-effects.125">Spin FV-1 Audio Effects</a>
+- <a href="https://xenvn.com/threads/spin-fv-1-instructions-and-syntax.122/">Spin FV-1 Instructions and Syntax</a>
+- <a href="https://xenvn.com/threads/basics-of-the-lfos-in-the-spin-fv-1.123/">Basics of the LFOs in the Spin FV-1</a>
 
 This is about all the info I could find on the assembly instructions itself...
 
