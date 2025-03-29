@@ -47,10 +47,12 @@ sd_spi = SPI(0, baudrate=2000000,
 try:
     sd = SDCard(sd_spi, cs=Pin(17))
 except OSError:
-    # TODO: no SD card found
     tft.fill(TFT.BLACK)
-    tft.text(( 0,  1), "no SD card found...\ncheck the card.", TFT.WHITE, sysfont, 2)
-    raise
+    tft.text(( 1,  1), "ERROR:", TFT.RED, sysfont, 2)
+    tft.text(( 1,  30), "no SD card found...", TFT.WHITE, sysfont, 1)
+    tft.text(( 1,  42), "check the card", TFT.WHITE, sysfont, 1)
+    while 1:
+        pass
 
 SPN_ROOT_DIR = "/sd"
 
@@ -63,6 +65,14 @@ TXT_SIZE = 1
 Y_START = 2
 
 fv_files = [f for f in os.listdir(SPN_ROOT_DIR) if f.endswith(".spn")]
+if len(fv_files) < 1:
+    tft.fill(TFT.BLACK)
+    tft.text(( 1,  1), "ERROR:", TFT.RED, sysfont, 2)
+    tft.text(( 1,  30), "no .spn files found", TFT.WHITE, sysfont, 1)
+    tft.text(( 1,  42), "check your SD card", TFT.WHITE, sysfont, 1)
+    tft.text(( 1,  54), "and retry", TFT.WHITE, sysfont, 1)
+    while 1:
+        pass
 
 cursor_pos = 0
 MAX_FILE_ON_DISP = 9
@@ -135,7 +145,6 @@ while(1):
             # roll over to beginning
             file_list_offs[0] = 0
             file_list_offs[1] = MAX_FILE_ON_DISP
-            cursor_pos = 0
 
         if cursor_pos > len(fv_files)-1:
             cursor_pos = 0
@@ -148,23 +157,30 @@ while(1):
 
     if not is_slot_selection and time.ticks_ms() - last_ticks_btn > 250 and btn_up.value() == 0:
         tft.fill(TFT.BLACK)
+        print(f"start scroll:\ncursor_pos: {cursor_pos}\noffs[0]: {file_list_offs[0]}\noffs[1]: {file_list_offs[1]}")
         # scroll up
         if btn_shift.value() == 0:
             scroll_mul = MAX_FILE_ON_DISP
 
         cursor_pos = cursor_pos - 1 * scroll_mul
+        print(f"decrease cursor_pos: cursor_pos: {cursor_pos}")
 
         if cursor_pos < file_list_offs[0]:
             file_list_offs[0] = file_list_offs[0] - 1 * scroll_mul
+            print(f"decrease index[0]: {file_list_offs[0]}")
             file_list_offs[1] = file_list_offs[1] - 1 * scroll_mul
+            print(f"decrease index[1]: {file_list_offs[1]}")
 
         if file_list_offs[0] < 0:
             # roll over
             file_list_offs[0] = len(fv_files)-1 - MAX_FILE_ON_DISP
             file_list_offs[1] = len(fv_files)-1
-            cursor_pos = len(fv_files)-1
+            print("roll over")
+            print(f"index[0]: {file_list_offs[0]}")
+            print(f"index[1]: {file_list_offs[1]}")
 
         if cursor_pos < 0:
+            print(f"cursor_pos: {cursor_pos}")
             cursor_pos = len(fv_files)-1
 
         draw_file_list()
