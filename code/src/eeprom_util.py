@@ -21,17 +21,20 @@ def write_eeprom(mem_addr, byte_buf):
         wp.on()
         return
 
+    curr_idx = 0
     n_slices = int(len(byte_buf)/32)
     for i in range(n_slices):
         mem_offs = mem_addr + i*32
         wp.off()
-        i2c.writeto_mem(0x50, mem_offs, byte_buf[mem_offs:mem_offs+32], addrsize=16)
+        i2c.writeto_mem(0x50, mem_offs, byte_buf[curr_idx:curr_idx+32], addrsize=16)
         wp.on()
+        curr_idx += 32
         time.sleep(0.005) # 5ms wait time needed by eeprom
     i+=1
     mem_offs = mem_addr + i*32
     wp.off()
-    i2c.writeto_mem(0x50, mem_offs, byte_buf[mem_offs:mem_offs+32], addrsize=16)
+    i2c.writeto_mem(0x50, mem_offs, byte_buf[curr_idx:curr_idx+32], addrsize=16)
+    print(curr_idx)
     wp.on()
 
 def clone_eeprom():
